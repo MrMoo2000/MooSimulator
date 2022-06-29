@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<config>
+	<!--Postive value to raise horizon-->
+	<horizonOffset>5</horizonOffset>
+</config>

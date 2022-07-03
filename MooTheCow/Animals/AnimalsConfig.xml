@@ -6,4 +6,10 @@
 		<width>15</width>
 		<height>5</height>
 	</cow>
+	<pig>
+		<name>pig</name>
+		<stomachMax>20</stomachMax>
+		<width>12</width>
+		<height>3</height>
+	</pig>
 </animals>

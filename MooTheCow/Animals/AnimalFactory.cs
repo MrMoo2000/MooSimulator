@@ -15,7 +15,7 @@ namespace MooTheCow
         public AnimalFactory()
         {
             XmlDocument animalDoc = new XmlDocument();
-            animalDoc.Load($"{Environment.CurrentDirectory}\\Animals.xml");
+            animalDoc.Load($"{Environment.CurrentDirectory}\\Animals\\AnimalsConfig.xml");
             foreach (XmlNode animal in animalDoc.SelectSingleNode ("//animals").ChildNodes)
             {
                 Dictionary<string, string> configAnimalProperties = new Dictionary<string, string>();

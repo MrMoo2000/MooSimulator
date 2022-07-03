@@ -10,6 +10,7 @@ namespace MooTheCow
     {
         private static Scene _currentScene;
         private static List<IDrawable> _drawnDrawables = new List<IDrawable>();
+        private static readonly object _cursorLock = new object();
 
         public static int Horizon { get; set; }
 
@@ -57,20 +58,23 @@ namespace MooTheCow
 
         public static void Draw(IDrawable drawThis)
         {
-            var drawablesToDraw = getOverlappingDrawables(drawThis);
-            drawablesToDraw.Add(drawThis);
-            drawablesToDraw.Sort(CompareOverlappingByClosest);
-
-            var drawing = CreateDrawingWithOverlap(drawThis.Boundary, drawablesToDraw);
-
-            for (int y = 0; y < drawing.GetLength(1); y++)
+            lock (_cursorLock)
             {
-                for (int x = 0; x < drawing.GetLength(0); x++)
+                var drawablesToDraw = getOverlappingDrawables(drawThis);
+                drawablesToDraw.Add(drawThis);
+                drawablesToDraw.Sort(CompareOverlappingByClosest);
+
+                var drawing = CreateDrawingWithOverlap(drawThis.Boundary, drawablesToDraw);
+
+                for (int y = 0; y < drawing.GetLength(1); y++)
                 {
-                    DrawTile(drawing[x, y], new Point { X = x + drawThis.Boundary.X, Y = y + drawThis.Boundary.Y });
+                    for (int x = 0; x < drawing.GetLength(0); x++)
+                    {
+                        DrawTile(drawing[x, y], new Point { X = x + drawThis.Boundary.X, Y = y + drawThis.Boundary.Y });
+                    }
                 }
+                _drawnDrawables.Add(drawThis);
             }
-            _drawnDrawables.Add(drawThis);
         }
         private static IObjectTile[,] CreateDrawingWithOverlap(Rectangle boundary, List<IDrawable> drawablesToDraw)
         {
@@ -100,17 +104,20 @@ namespace MooTheCow
 
         public static void Erase(IDrawable eraseThis)
         {
-            _drawnDrawables.Remove(eraseThis);
-            var drawablesToDraw = getOverlappingDrawables(eraseThis);
-            drawablesToDraw.Sort(CompareOverlappingByClosest);
-
-            var drawing = CreateDrawingWithOverlap(eraseThis.Boundary, drawablesToDraw);
-
-            for (int y = 0; y < drawing.GetLength(1); y++)
+            lock (_cursorLock)
             {
-                for (int x = 0; x < drawing.GetLength(0); x++)
+                _drawnDrawables.Remove(eraseThis);
+                var drawablesToDraw = getOverlappingDrawables(eraseThis);
+                drawablesToDraw.Sort(CompareOverlappingByClosest);
+
+                var drawing = CreateDrawingWithOverlap(eraseThis.Boundary, drawablesToDraw);
+
+                for (int y = 0; y < drawing.GetLength(1); y++)
                 {
-                    DrawTile(drawing[x, y], new Point { X = x + eraseThis.Boundary.X, Y = y + eraseThis.Boundary.Y });
+                    for (int x = 0; x < drawing.GetLength(0); x++)
+                    {
+                        DrawTile(drawing[x, y], new Point { X = x + eraseThis.Boundary.X, Y = y + eraseThis.Boundary.Y });
+                    }
                 }
             }
         }

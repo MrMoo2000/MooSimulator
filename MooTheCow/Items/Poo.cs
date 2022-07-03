@@ -32,7 +32,7 @@ namespace MooTheCow
         {
             await Task.Factory.StartNew(() => Thread.Sleep(15000));
             _scene.Tiles[_x, _y].item = null;
-            _scene.renderTile(_x, _y);
+            //_scene.renderTile(_x, _y);
 
             for(int yi = -1; yi < 2; yi++)
             {
@@ -40,7 +40,7 @@ namespace MooTheCow
                 {
                     if (_scene.Tiles[_x + xi, _y + yi].GetType() == typeof(DirtTile)){
                         _scene.Tiles[_x + xi, _y + yi] = new GrassTile();
-                        _scene.renderTile(_x + xi, _y + yi);
+                        //_scene.renderTile(_x + xi, _y + yi);
                     }
                 }
             }

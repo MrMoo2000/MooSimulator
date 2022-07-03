@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<animations>
+	<animals>
+		<cow>
+			<FaceRight delay="0">
+				<frame>cow_face_right</frame>
+			</FaceRight>
+			<FaceLeft delay="100">
+				<frame>cow_face_left</frame>
+			</FaceLeft>
+			<WalkLeft delay="125">
+				<frame>cow_walk_left_1</frame>
+				<frame>cow_walk_left_2</frame>
+				<frame>cow_face_left</frame>
+			</WalkLeft>
+			<WalkRight delay="125">
+				<frame>cow_walk_right_1</frame>
+				<frame>cow_walk_right_2</frame>
+				<frame>cow_face_right</frame>
+			</WalkRight>
+			<EatLeft delay="250">
+				<frame>cow_eat_left_1</frame>
+				<frame>cow_eat_left_2</frame>
+				<frame>cow_eat_left_1</frame>
+				<frame>cow_face_left</frame>
+			</EatLeft>
+			<EatRight delay="250">
+				<frame>cow_eat_right_1</frame>
+				<frame>cow_eat_right_2</frame>
+				<frame>cow_eat_right_1</frame>
+				<frame>cow_face_right</frame>
+			</EatRight>
+		</cow>
+		<pig>
+			<FaceLeft delay="0">
+				<frame>pig_face_left</frame>
+			</FaceLeft>
+		</pig>
+	</animals>
+</animations>

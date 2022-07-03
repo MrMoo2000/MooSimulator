@@ -17,10 +17,9 @@ namespace MooTheCow
         public int StomachMax { get; }
 
         private int stomachLevel = 0;
+        public bool AnimalBusy { get; }
 
         public Dictionary<AnimationTypes, IAnimation> Animations { get; } = new Dictionary<AnimationTypes, IAnimation>();
-
-        public ISprite Sprite { get; }
         public Animal(Dictionary<string,string> animalProperties)
         {
             Name = animalProperties["name"];
@@ -33,7 +32,6 @@ namespace MooTheCow
                     Width = int.Parse(animalProperties["width"]),
                     Height = int.Parse(animalProperties["height"])
                 },
-                ObjectTiles = Animations[AnimationTypes.FaceRight].Frames[0]
             };
         }
         public void SetLocation(Point location)
@@ -42,5 +40,6 @@ namespace MooTheCow
             bound.Location = location;
             Drawable.Boundary = bound;
         }
+
     }
 }

@@ -22,35 +22,11 @@ namespace MooTheCow
         private const int STOMACH_MAX = 20;
         private int stomachLevel = 0;
 
-        public ISprite Sprite { get; }
+        //public ISprite Sprite { get; }
         public Cow(Scene scene)
         {
             _scene = scene;
-            Sprite = new CowSprite(ConsoleColor.White, ConsoleColor.Black)
-            {
-
-            };
-        }
-
-        public void cleanScene()
-        {
-            for (int y = 0; y < cowHeight; y++)
-            {
-                for (int x = 0; x < cowWidth; x++)
-                {
-                    Console.SetCursorPosition(cowX + x, cowY + y);
-                    Console.BackgroundColor = _scene.Tiles[cowX + x, cowY + y].GetColor();
-                    if (_scene.Tiles[cowX + x, cowY + y].item != null)
-                    {
-                        Console.ForegroundColor = _scene.Tiles[cowX + x, cowY + y].item.GetColor();
-                        Console.Write(_scene.Tiles[cowX + x, cowY + y].item.GetVisual());
-                    }
-                    else
-                    {
-                        Console.Write(" ");
-                    }
-                }
-            }
+            //Sprite = new CowSprite(ConsoleColor.White, ConsoleColor.Black);
         }
         public void drawMoo()
         {
@@ -176,16 +152,16 @@ namespace MooTheCow
                 tileXOffset = 0;
             }
             _scene.Tiles[cowX + tileXOffset, cowY + tileYOffset].item = new Poo(_scene, cowX + tileXOffset, cowY + tileYOffset);
-            _scene.renderTile(cowX + tileXOffset, cowY + tileYOffset);
+            //_scene.renderTile(cowX + tileXOffset, cowY + tileYOffset);
 
             stomachLevel = (stomachLevel - STOMACH_MIN <= 0) ? 0 : stomachLevel - 4;
-            _scene.updateStomachUI(stomachLevel);
+           // _scene.updateStomachUI(stomachLevel);
         }
 
 
         public void drawEat(int eatingX, int eatingY)
         {
-            cleanScene();
+            //cleanScene();
             int[] animDelay = new int[]
             {
                 125, 750, 125, 0
@@ -197,7 +173,7 @@ namespace MooTheCow
 
             for (int i = 0; i < 4; i++)
             {
-                cleanScene();
+                //cleanScene();
 
                 //drawHead(FacingLeft, animOrder[i]);
 
@@ -214,7 +190,7 @@ namespace MooTheCow
                     for (int ii = 0; ii < 4; ii++)
                     {
                         _scene.Tiles[eatingX + ii, eatingY] = new DirtTile();
-                        _scene.renderTile(eatingX + ii, eatingY);
+                       // _scene.renderTile(eatingX + ii, eatingY);
                     }
                 }
             }
@@ -246,7 +222,7 @@ namespace MooTheCow
                 }
                 drawEat(eatingX, eatingY);
                 stomachLevel = (stomachLevel + grassAteCount > STOMACH_MAX) ? STOMACH_MAX : stomachLevel + grassAteCount;
-                _scene.updateStomachUI(stomachLevel);
+               // _scene.updateStomachUI(stomachLevel);
             }            
         }
     }

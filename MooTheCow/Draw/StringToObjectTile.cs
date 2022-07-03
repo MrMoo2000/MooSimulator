@@ -20,27 +20,6 @@ namespace MooTheCow
 
         public void Write(string objectLine)
         {
-            for (int counter = 0; counter < objectLine.Length; counter++)
-            {
-                if (objectLine[counter].Equals('?'))
-                {
-                    ObjectTiles[WriteX, WriteY] = null;
-                }
-                else
-                {
-                    ObjectTiles[WriteX, WriteY] = new ObjectTile()
-                    {
-                        BackgroundColor = BackgroundColor,
-                        ForegroundColor = ForegroundColor,
-                        Image = objectLine[counter]
-                    };
-                }
-                WriteX++;
-            }
-        }
-
-        public void Write2(string objectLine)
-        {
             char colorEscapeBegin = '['; // TODO add the escape to config 
             char colorEscapeEnd = ']';
             const string FG_TAG = "fg=";

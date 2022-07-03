@@ -103,28 +103,5 @@ namespace MooTheCow
             }
             
         }
-
-        public void renderTile(int x, int y)
-        {
-            Console.BackgroundColor = Tiles[x, y].GetColor();
-            Console.SetCursorPosition(x, y);
-            if (Tiles[x, y].item != null)
-            {
-                Console.ForegroundColor = Tiles[x,y].item.GetColor();
-                Console.Write(Tiles[x, y].item.GetVisual());
-            }
-            else
-            {
-                Console.Write(" ");
-            }
-        }
-
-        public void updateStomachUI(int stomachLevel)
-        {
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.BackgroundColor = ConsoleColor.Black;
-            Console.SetCursorPosition(Console.WindowWidth - 16, Console.WindowHeight - 1);
-            Console.Write($"Stomach: {stomachLevel*5}%  ");
-        }
     }
 }

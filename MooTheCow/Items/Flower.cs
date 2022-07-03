@@ -26,7 +26,6 @@ namespace MooTheCow
                         _flowerColor = ConsoleColor.Yellow;
                         break;
                 }
-                    
             }
             return _flowerColor;
         }

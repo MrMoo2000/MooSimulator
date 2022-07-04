@@ -7,5 +7,6 @@ namespace MooTheCow
     {
         public Dictionary<AnimationTypes, IAnimation> Animations { get; }
         public IDrawable Drawable { get; set; }
+        public bool AnimationStop { get; set; }
     }
 }

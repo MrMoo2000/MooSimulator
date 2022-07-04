@@ -19,6 +19,7 @@ namespace MooTheCow
         public int StomachLevel { get; private set; } = 20;
         public bool Busy { get; private set; }
         public bool Alive { get; private set; } = true;
+        public bool AnimationStop { get; set; } = false;
 
 
         public Dictionary<AnimationTypes, IAnimation> Animations { get; } = new Dictionary<AnimationTypes, IAnimation>();
@@ -112,7 +113,8 @@ namespace MooTheCow
 
         public void DecreaseStomachLevel(int amount = 1)
         {
-            StomachLevel = (StomachLevel - amount) <= 0 ? 0 : StomachLevel;
+            StomachLevel = (StomachLevel - amount) <= 0 ? 0 : StomachLevel - amount;
+            Debug.WriteLine(StomachLevel);
             if(StomachLevel == 0)
             {
                 Death();
@@ -122,7 +124,8 @@ namespace MooTheCow
         public void Death()
         {
             Alive = false;
-            Animator.AnimateDrawable(AnimationTypes.Death, this);
+            AnimationStop = true;
+            Animator.DrawSingleFrame(AnimationTypes.Death, this);
         }
 
     }

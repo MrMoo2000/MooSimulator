@@ -222,15 +222,11 @@ namespace MooTheCow
         {
             lock (_cursorLock)
             {
-                foreach (IDrawable drawable in _drawnDrawables)
-                {
-                    if (drawable.Boundary.Contains(location))
-                    {
-                        return;
-                    }
-                }
-                IObjectTile objectTile = null;
-                DrawTile(objectTile, location);
+                var boundary = new Rectangle(location.X, location.Y, 1, 1);
+
+               
+                IObjectTile[,] objectTile = CreateDrawingWithOverlap(boundary, _drawnDrawables);
+                DrawTile(objectTile[0,0], location);
             }
         }
     }

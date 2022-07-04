@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace MooTheCow
 {
@@ -12,6 +13,7 @@ namespace MooTheCow
         public static Animal Player;
         private static List<Animal> _nonPlayerAnimals = new List<Animal>();
         private static AnimalFactory _animalFactory = new AnimalFactory();
+        private static Random _rnd = new Random();
 
         public static void AddNonPlayerAnimal(string animalType, Point location, bool facingLeft = false)
         {
@@ -22,6 +24,7 @@ namespace MooTheCow
 
             // Kick off an ASYNC which will cause the cow to move random directions at random intervals
             CowWander(animal);
+            GiveHunger(animal);
         }
         public static void AddPlayerAnimal(string animalType, Point location, bool facingLeft = false)
         {
@@ -35,22 +38,21 @@ namespace MooTheCow
             animal.SetLocation(location);
             animal.FacingLeft = facingLeft;
             AnimationTypes animation = (animal.FacingLeft) ? AnimationTypes.FaceLeft : AnimationTypes.FaceRight;
-            Animator.AnimateDrawable(animation, animal);
+            Animator.DrawSingleFrame(animation, animal);
             return animal;
         }
 
         private static async void CowWander(Animal animal)
         {
-            Random rnd = new Random();
             do
             {
-                await Task.Delay(rnd.Next(250, 5000));
+                await Task.Delay(_rnd.Next(250, 5000));
                 if (animal.Busy == false && animal.Alive == true)
                 {
-                    var direction = rnd.Next(37, 41);
+                    var direction = _rnd.Next(37, 41);
                     var key = (ConsoleKey)direction;
 
-                    var eating = rnd.Next(0, 10);
+                    var eating = _rnd.Next(0, 10);
                     if (eating > 6)
                     {
                         animal.Eat();
@@ -68,7 +70,12 @@ namespace MooTheCow
         {
             do
             {
-                
+                Debug.WriteLine("Calling Hunger");
+                await Task.Delay(_rnd.Next(100, 1900));
+                if (animal.Alive == true)
+                {
+                    animal.DecreaseStomachLevel();
+                }
             } while (animal.Alive == true);
         }
 

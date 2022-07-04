@@ -18,18 +18,25 @@
 				<frame>cow_walk_right_2</frame>
 				<frame>cow_face_right</frame>
 			</WalkRight>
-			<EatLeft delay="250">
+			<HeadDownLeft delay="250">
 				<frame>cow_eat_left_1</frame>
 				<frame>cow_eat_left_2</frame>
+			</HeadDownLeft>
+			<HeadUpLeft delay="250">
 				<frame>cow_eat_left_1</frame>
 				<frame>cow_face_left</frame>
-			</EatLeft>
-			<EatRight delay="250">
+			</HeadUpLeft>
+			<HeadDownRight delay="250">
 				<frame>cow_eat_right_1</frame>
 				<frame>cow_eat_right_2</frame>
+			</HeadDownRight>
+			<HeadUpRight delay="250">
 				<frame>cow_eat_right_1</frame>
 				<frame>cow_face_right</frame>
-			</EatRight>
+			</HeadUpRight>
+			<Death delay ="0">
+				<frame>cow_death</frame>
+			</Death>
 		</cow>
 		<pig>
 			<FaceLeft delay="0">

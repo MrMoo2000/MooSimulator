@@ -33,6 +33,7 @@ namespace MooTheCow
         {
             Animal animal = _animalFactory.GetAnimal(animalType);
             animal.SetLocation(location);
+            animal.FacingLeft = facingLeft;
             AnimationTypes animation = (animal.FacingLeft) ? AnimationTypes.FaceLeft : AnimationTypes.FaceRight;
             Animator.AnimateDrawable(animation, animal);
             return animal;
@@ -43,16 +44,33 @@ namespace MooTheCow
             Random rnd = new Random();
             do
             {
-                var direction = rnd.Next(37, 41);
-                var key = (ConsoleKey)direction;
-
-                if (Program.validateMove(key, animal))
+                await Task.Delay(rnd.Next(250, 5000));
+                if (animal.Busy == false && animal.Alive == true)
                 {
-                    Program.MoveAnimal(key, animal);
+                    var direction = rnd.Next(37, 41);
+                    var key = (ConsoleKey)direction;
+
+                    var eating = rnd.Next(0, 10);
+                    if (eating > 6)
+                    {
+                        animal.Eat();
+                    }
+                    else if (Display.ValidateMove(key, animal.Drawable))
+                    {
+                        animal.MoveAnimal(key);
+                    }
                 }
                 
-                await Task.Delay(rnd.Next(250,5000));
-            } while (0 == 0);
+            } while (animal.Alive == true);
         }
+
+        private static async void GiveHunger(Animal animal)
+        {
+            do
+            {
+                
+            } while (animal.Alive == true);
+        }
+
     }
 }

@@ -183,19 +183,55 @@ namespace MooTheCow
         }
         public static bool DrawableCollision(IDrawable drawThis, Point destination)
         {
-            var y = destination.Y + drawThis.Boundary.Height;
-
-            var overlappingDrawables = getOverlappingDrawables(drawThis, destination);
-
-            foreach(IDrawable overlappingDrawable in overlappingDrawables)
+            lock (_cursorLock)
             {
-                var olapY = overlappingDrawable.Boundary.Y + overlappingDrawable.Boundary.Height;
-                if(olapY == y)
+                var y = destination.Y + drawThis.Boundary.Height;
+
+                var overlappingDrawables = getOverlappingDrawables(drawThis, destination);
+
+                foreach (IDrawable overlappingDrawable in overlappingDrawables)
                 {
-                    return true;
+                    var olapY = overlappingDrawable.Boundary.Y + overlappingDrawable.Boundary.Height;
+                    if (olapY == y)
+                    {
+                        return true;
+                    }
                 }
+                return false;
             }
-            return false;
+        }
+        public static bool ValidateMove(ConsoleKey keyPressed, IDrawable drawable)
+        {
+            Point validatePoint = drawable.Boundary.Location;
+
+            validatePoint.Offset(Program.KeyToPoint[keyPressed]);
+            if (
+                (validatePoint.X >= Console.WindowWidth - drawable.Boundary.Width + 1) ||
+                (validatePoint.X < 0) ||
+                (validatePoint.Y <= Display.Horizon - drawable.Boundary.Height) ||
+                (validatePoint.Y >= Console.WindowHeight - 6) ||
+                Display.DrawableCollision(drawable, validatePoint)
+                )
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public static void UpdateSceneTile(Point location)
+        {
+            lock (_cursorLock)
+            {
+                foreach (IDrawable drawable in _drawnDrawables)
+                {
+                    if (drawable.Boundary.Contains(location))
+                    {
+                        return;
+                    }
+                }
+                IObjectTile objectTile = null;
+                DrawTile(objectTile, location);
+            }
         }
     }
 

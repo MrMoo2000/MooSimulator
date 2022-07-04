@@ -5,12 +5,23 @@ using System.Threading.Tasks;
 
 namespace MooTheCow
 {
+    public enum AnimationTypes
+    {
+        FaceRight = 0,
+        FaceLeft = 1,
+        WalkRight = 2,
+        WalkLeft = 3,
+        HeadDownRight = 4,
+        HeadUpRight = 5,
+        HeadDownLeft = 6,
+        HeadUpLeft = 7,
+        Death = 8
+    }
     static class Animator
     {
 
         public static async void AnimateDrawable(AnimationTypes animationType, IAnimatable animatable)
         {
-            Program.InputReady = false;
             IAnimation animation = animatable.Animations[animationType];
             IDrawable drawable = animatable.Drawable;
 
@@ -25,7 +36,6 @@ namespace MooTheCow
                     await Task.Delay(animation.Delay);
                 }
             }
-            Program.InputReady = true;
         }
         public static async Task<bool> Animation(AnimationTypes animationType, IAnimatable animatable)
         {

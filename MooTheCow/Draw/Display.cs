@@ -8,30 +8,22 @@ namespace MooTheCow
 {
     static class Display
     {
-        private static Scene _currentScene;
         private static List<IDrawable> _drawnDrawables = new List<IDrawable>();
         private static readonly object _cursorLock = new object();
 
-        public static int Horizon { get; set; }
 
-        public static void SetScene(Scene scene)
-        {
-            _currentScene = scene;
-            RenderScene();
-        }
-
-        private static void RenderScene()
+        public static void RenderScene()
         {
             for (int y = 0; y < Console.WindowHeight; y++)
             {
                 for (int x = 0; x < Console.WindowWidth; x++)
                 {
-                    Console.BackgroundColor = _currentScene.Tiles[x, y].Color;
+                    Console.BackgroundColor = SceneManager.Scene.Tiles[x, y].Color;
                     Console.SetCursorPosition(x, y);
-                    if (_currentScene.Tiles[x, y].Item != null)
+                    if (SceneManager.Scene.Tiles[x, y].Item != null)
                     {
-                        Console.ForegroundColor = _currentScene.Tiles[x, y].Item.Color;
-                        Console.Write(_currentScene.Tiles[x, y].Item.Image);
+                        Console.ForegroundColor = SceneManager.Scene.Tiles[x, y].Item.Color;
+                        Console.Write(SceneManager.Scene.Tiles[x, y].Item.Image);
                     }
                     else
                     {
@@ -169,11 +161,11 @@ namespace MooTheCow
             }
             else
             {
-                Console.BackgroundColor = _currentScene.Tiles[drawAt.X, drawAt.Y].Color;
-                if (_currentScene.Tiles[drawAt.X, drawAt.Y].Item != null)
+                Console.BackgroundColor = SceneManager.Scene.Tiles[drawAt.X, drawAt.Y].Color;
+                if (SceneManager.Scene.Tiles[drawAt.X, drawAt.Y].Item != null)
                 {
-                    Console.ForegroundColor = _currentScene.Tiles[drawAt.X, drawAt.Y].Item.Color;
-                    Console.Write(_currentScene.Tiles[drawAt.X, drawAt.Y].Item.Image);
+                    Console.ForegroundColor = SceneManager.Scene.Tiles[drawAt.X, drawAt.Y].Item.Color;
+                    Console.Write(SceneManager.Scene.Tiles[drawAt.X, drawAt.Y].Item.Image);
                 }
                 else
                 {
@@ -208,7 +200,7 @@ namespace MooTheCow
             if (
                 (validatePoint.X >= Console.WindowWidth - drawable.Boundary.Width + 1) ||
                 (validatePoint.X < 0) ||
-                (validatePoint.Y <= Display.Horizon - drawable.Boundary.Height) ||
+                (validatePoint.Y <= SceneManager.Horizon - drawable.Boundary.Height) ||
                 (validatePoint.Y >= Console.WindowHeight - 6) ||
                 Display.DrawableCollision(drawable, validatePoint)
                 )

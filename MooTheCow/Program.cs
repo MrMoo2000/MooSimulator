@@ -22,20 +22,13 @@ namespace MooTheCow
 
         //public static List<Animal> OtherCows = new List<Animal>();
 
-        static void Main(string[] args)
+        static Program()
         {
             ConfigureConsole();
+        }
 
-            Config config = new Config();
-            AnimationLoader.LoadAnimiations();
-
-            Display.Horizon = Console.WindowHeight - (Console.WindowHeight / 3 + config.HorizonOffset);
-
-            Scene scene = new Scene(Display.Horizon);
-            scene.fillTiles();
-
-            Display.SetScene(scene);
-            SceneManager.Scene = scene;
+        static void Main(string[] args)
+        {
 
             AnimalManager.AddNonPlayerAnimal("cow", new Point(15, 22),true);
             AnimalManager.AddNonPlayerAnimal("cow", new Point(82, 20),true);

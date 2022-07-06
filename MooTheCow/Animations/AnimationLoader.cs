@@ -26,7 +26,12 @@ namespace MooTheCow
         static char colorEscapeBegin = '['; //TODO Change escape to config values 
         static char colorEscapeEnd = ']';
 
-        public static void LoadAnimiations()
+        static AnimationLoader()
+        {
+            LoadAnimiations();
+        }
+
+        private static void LoadAnimiations()
         {
             var animationsDoc = GetAnimationsDoc();
             var animals = GetAnimalAnimationNode(animationsDoc);

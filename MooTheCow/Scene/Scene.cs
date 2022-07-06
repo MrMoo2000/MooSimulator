@@ -6,12 +6,11 @@ namespace MooTheCow
 {
     class Scene
     {
-        private int _horizon;
         public ITile[,] Tiles { get; set; }
 
-        public Scene(int horizon)
+        public Scene()
         {
-            _horizon = horizon;
+            fillTiles();
         }
 
         public void fillTiles()
@@ -28,7 +27,7 @@ namespace MooTheCow
                     {
                         Tiles[x, y] = new BlackTile();
                     }
-                    else if(y >= _horizon)
+                    else if(y >= SceneManager.Horizon)
                     {
 
                         //var grassTile = new GrassTile();
@@ -74,7 +73,7 @@ namespace MooTheCow
             }
 
             int fenceRows = 0;
-            for (int fenceY = _horizon - 3; fenceY < _horizon; fenceY++)
+            for (int fenceY = SceneManager.Horizon - 3; fenceY < SceneManager.Horizon; fenceY++)
             {
                 fenceRows++;
                 int gapCount = 4;

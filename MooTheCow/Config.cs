@@ -5,10 +5,10 @@ using System.Xml;
 
 namespace MooTheCow
 {
-    class Config
+    static class Config
     {
-        public int HorizonOffset { get; }
-        public Config()
+        public static int HorizonOffset { get; private set; }
+        static Config()
         {
             XmlDocument configDoc = new XmlDocument();
             configDoc.Load($"{Environment.CurrentDirectory}\\Config.xml");

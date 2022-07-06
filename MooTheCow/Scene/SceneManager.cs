@@ -8,7 +8,15 @@ namespace MooTheCow
 {
     static class SceneManager
     {
-        public static Scene Scene;
+        public static Scene Scene { get; private set; }
+        public static int Horizon { get; set; }
+
+        static SceneManager()
+        {
+            Horizon = Console.WindowHeight - (Console.WindowHeight / 3 + Config.HorizonOffset);
+            Scene = new Scene();
+            Display.RenderScene();
+        }
 
         public static Type[] GetTileTypes(Point location, int length = 1)
         {

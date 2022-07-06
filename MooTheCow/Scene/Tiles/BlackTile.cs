@@ -4,11 +4,8 @@ namespace MooTheCow
 {
     class BlackTile : ITile
     {
-        public IItem item {get;set; }
-        public ConsoleColor GetColor()
-        {
-            return ConsoleColor.Black;
-        }
+        public IItem Item {get;set; }
+        public ConsoleColor Color { get; } = ConsoleColor.Black;
 
     }
 }

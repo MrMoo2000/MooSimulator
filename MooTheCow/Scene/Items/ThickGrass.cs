@@ -4,13 +4,7 @@ namespace MooTheCow
 {
     class ThickGrass : IItem
     {
-        public string GetVisual()
-        {
-            return "*";
-        }
-        public ConsoleColor GetColor()
-        {
-            return ConsoleColor.DarkGreen;
-        }
+        public char Image { get; } = '*';
+        public ConsoleColor Color { get; } = ConsoleColor.DarkGreen;
     }
 }

@@ -4,7 +4,7 @@ namespace MooTheCow
 {
     interface IItem
     {
-        public string GetVisual();
-        public ConsoleColor GetColor();
+        public char Image { get; }
+        public ConsoleColor Color { get; }
     }
 }

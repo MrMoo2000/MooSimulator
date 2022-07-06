@@ -4,35 +4,53 @@ namespace MooTheCow
 {
     class Flower : IItem
     {
-        private ConsoleColor _flowerColor;
+        public char Image { get; } = '@';
 
-        public ConsoleColor GetColor()
+        public ConsoleColor Color { get; private set; } = ConsoleColor.Black;
+
+        public Flower()
         {
-            if(_flowerColor == ConsoleColor.Black) // Default ConsoleColor
+            SetFlowerColor();
+        }
+
+        private void SetFlowerColor()
+        {
+            switch (new Random().Next(1, 4))
+            {
+                case 1:
+                    Color = ConsoleColor.Red;
+                    break;
+
+                case 2:
+                    Color = ConsoleColor.Blue;
+                    break;
+
+                case 3:
+                    Color = ConsoleColor.Yellow;
+                    break;
+            }
+            /*
+            if (Color == ConsoleColor.Black) // Default ConsoleColor
             {
                 Random rnd = new Random();
                 int color = rnd.Next(1, 4);
                 switch (color)
                 {
                     case 1:
-                        _flowerColor = ConsoleColor.Red;
+                        Color = ConsoleColor.Red;
                         break;
 
                     case 2:
-                        _flowerColor = ConsoleColor.Blue;
+                        Color = ConsoleColor.Blue;
                         break;
 
                     case 3:
-                        _flowerColor = ConsoleColor.Yellow;
+                        Color = ConsoleColor.Yellow;
                         break;
                 }
             }
-            return _flowerColor;
+            */
         }
 
-        public string GetVisual()
-        {
-            return "@";
-        }
     }
 }

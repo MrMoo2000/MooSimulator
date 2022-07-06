@@ -4,7 +4,7 @@ namespace MooTheCow
 {
     interface ITile
     {
-        public IItem item { get; set; }
-        ConsoleColor GetColor();
+        public IItem Item { get; set; }
+        public ConsoleColor Color { get; }
     }
 }

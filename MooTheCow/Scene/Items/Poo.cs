@@ -9,6 +9,8 @@ namespace MooTheCow
         private Scene _scene;
         private int _x;
         private int _y;
+        public char Image { get; } = '\u058E';
+        public ConsoleColor Color { get; } = ConsoleColor.DarkGray;
 
         public Poo(Scene scene, int x, int y)
         {
@@ -18,20 +20,11 @@ namespace MooTheCow
             DecomposePoo();
         }
 
-        public ConsoleColor GetColor()
-        {
-            return ConsoleColor.DarkGray;
-        }
-
-        public string GetVisual()
-        {
-            return "\u058E";
-        }
 
         private async void DecomposePoo()
         {
             await Task.Factory.StartNew(() => Thread.Sleep(15000));
-            _scene.Tiles[_x, _y].item = null;
+            _scene.Tiles[_x, _y].Item = null;
             //_scene.renderTile(_x, _y);
 
             for(int yi = -1; yi < 2; yi++)

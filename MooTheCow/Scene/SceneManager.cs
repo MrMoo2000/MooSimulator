@@ -21,11 +21,25 @@ namespace MooTheCow
             }
             return types;
         }
-        // Set tile at location
+        /// <summary>
+        /// Set x,y point of scene to specific tile 
+        /// </summary>
+        /// <param name="location">the x,y cord of scene to set tile</param>
+        /// <param name="tile">tile to set to</param>
         public static void UpdateSceneTile(Point location, ITile tile)
         {
             Scene.Tiles[location.X, location.Y] = tile;
-            Display.UpdateSceneTile(location);
+            Display.DrawSceneTile(location);
+        }
+        /// <summary>
+        /// Set area of scene to specific tile 
+        /// </summary>
+        /// <param name="area">area to set a tile to</param>
+        /// <param name="tile">Tile to set area to</param>
+        public static void UpdateSceneTiles(Rectangle area, ITile tile)
+        {
+            Scene.Tiles[area.X, area.Y] = tile;
+            Display.DrawSceneTile(area.Location);
         }
     }
 }

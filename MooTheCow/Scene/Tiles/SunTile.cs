@@ -4,10 +4,7 @@ namespace MooTheCow
 {
     class SunTile : ITile
     {
-        public IItem item { get; set; }
-        public ConsoleColor GetColor()
-        {
-            return ConsoleColor.Yellow;
-        }
+        public IItem Item { get; set; }
+        public ConsoleColor Color { get; } = ConsoleColor.Yellow;
     }
 }

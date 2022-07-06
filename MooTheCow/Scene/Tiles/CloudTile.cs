@@ -4,10 +4,7 @@ namespace MooTheCow
 {
     class CloudTile : ITile
     {
-        public IItem item { get; set; }
-        public ConsoleColor GetColor()
-        {
-            return ConsoleColor.White;
-        }
+        public IItem Item { get; set; }
+        public ConsoleColor Color { get; } = ConsoleColor.White;
     }
 }

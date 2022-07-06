@@ -26,12 +26,12 @@ namespace MooTheCow
             {
                 for (int x = 0; x < Console.WindowWidth; x++)
                 {
-                    Console.BackgroundColor = _currentScene.Tiles[x, y].GetColor();
+                    Console.BackgroundColor = _currentScene.Tiles[x, y].Color;
                     Console.SetCursorPosition(x, y);
-                    if (_currentScene.Tiles[x, y].item != null)
+                    if (_currentScene.Tiles[x, y].Item != null)
                     {
-                        Console.ForegroundColor = _currentScene.Tiles[x, y].item.GetColor();
-                        Console.Write(_currentScene.Tiles[x, y].item.GetVisual());
+                        Console.ForegroundColor = _currentScene.Tiles[x, y].Item.Color;
+                        Console.Write(_currentScene.Tiles[x, y].Item.Image);
                     }
                     else
                     {
@@ -169,11 +169,11 @@ namespace MooTheCow
             }
             else
             {
-                Console.BackgroundColor = _currentScene.Tiles[drawAt.X, drawAt.Y].GetColor();
-                if (_currentScene.Tiles[drawAt.X, drawAt.Y].item != null)
+                Console.BackgroundColor = _currentScene.Tiles[drawAt.X, drawAt.Y].Color;
+                if (_currentScene.Tiles[drawAt.X, drawAt.Y].Item != null)
                 {
-                    Console.ForegroundColor = _currentScene.Tiles[drawAt.X, drawAt.Y].item.GetColor();
-                    Console.Write(_currentScene.Tiles[drawAt.X, drawAt.Y].item.GetVisual());
+                    Console.ForegroundColor = _currentScene.Tiles[drawAt.X, drawAt.Y].Item.Color;
+                    Console.Write(_currentScene.Tiles[drawAt.X, drawAt.Y].Item.Image);
                 }
                 else
                 {
@@ -218,13 +218,11 @@ namespace MooTheCow
             return true;
         }
 
-        public static void UpdateSceneTile(Point location)
+        public static void DrawSceneTile(Point location)
         {
             lock (_cursorLock)
             {
                 var boundary = new Rectangle(location.X, location.Y, 1, 1);
-
-               
                 IObjectTile[,] objectTile = CreateDrawingWithOverlap(boundary, _drawnDrawables);
                 DrawTile(objectTile[0,0], location);
             }

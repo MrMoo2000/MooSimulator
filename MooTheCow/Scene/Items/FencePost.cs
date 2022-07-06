@@ -4,14 +4,8 @@ namespace MooTheCow
 {
     class FencePost : IItem
     {
-        public ConsoleColor GetColor()
-        {
-            return ConsoleColor.Black;
-        }
+        public char Image { get; } = '|';
 
-        public string GetVisual()
-        {
-            return "|";
-        }
+        public ConsoleColor Color { get; } = ConsoleColor.Black;
     }
 }

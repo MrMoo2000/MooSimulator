@@ -30,16 +30,18 @@ namespace MooTheCow
                     }
                     else if(y >= _horizon)
                     {
-                        var grassTile = new GrassTile();
-                        if (rnd.Next(1, 10) < 2)
+
+                        //var grassTile = new GrassTile();
+                        /*if (rnd.Next(1, 10) < 2)
                         {
-                            grassTile.item = new ThickGrass();
+                            grassTile.tem = new ThickGrass();
                         }
                         if (rnd.Next(1, 20) < 2)
                         {
                             grassTile.item = new Flower();
                         }
-                        Tiles[x, y] = grassTile;
+                        */
+                        Tiles[x, y] = new GrassTile();
                     }
                     else
                     {
@@ -81,20 +83,20 @@ namespace MooTheCow
                 {
                     if(fenceRows == 2)
                     {
-                        Tiles[fenceX, fenceY] = new DirtTile() { item = new Wire()};
+                        Tiles[fenceX, fenceY] = new DirtTile() { Item = new Wire()};
                     }
                     else
                     {
                         gapCount++;
                         if(gapCount == 6)
                         {
-                            Tiles[fenceX, fenceY] = new DirtTile() { item = new FencePost()};
+                            Tiles[fenceX, fenceY] = new DirtTile() { Item = new FencePost()};
                             gapCount = 1;
                             drawTwo = true;
                         }
                         else if(drawTwo == true)
                         {
-                            Tiles[fenceX, fenceY] = new DirtTile() { item = new FencePost() };
+                            Tiles[fenceX, fenceY] = new DirtTile() { Item = new FencePost() };
                             drawTwo = false;
                         }
                     }

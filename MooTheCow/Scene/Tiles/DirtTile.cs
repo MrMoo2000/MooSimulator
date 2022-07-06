@@ -4,10 +4,7 @@ namespace MooTheCow
 {
     class DirtTile : ITile
     {
-        public IItem item { get; set; }
-        public ConsoleColor GetColor()
-        {
-            return ConsoleColor.DarkYellow;
-        }
+        public IItem Item { get; set; }
+        public ConsoleColor Color { get; } = ConsoleColor.DarkYellow;
     }
 }

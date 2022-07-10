@@ -43,6 +43,7 @@ namespace MooTheCow
                 }
                 counter++;
                 drawable.ObjectTiles = frame;
+                Display.Erase(drawable);
                 Display.Draw(drawable);
                 if (counter != animation.Frames.Count)
                 {

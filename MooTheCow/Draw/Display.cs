@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Collections.Generic;
 using System.Text;
 using System.Diagnostics;
+using System.Linq;
 
 namespace MooTheCow
 {
@@ -52,7 +53,7 @@ namespace MooTheCow
         {
             lock (_cursorLock)
             {
-                var drawablesToDraw = getOverlappingDrawables(drawThis);
+                var drawablesToDraw = GetOverlappingDrawables(drawThis.Boundary);
                 drawablesToDraw.Add(drawThis);
                 drawablesToDraw.Sort(CompareOverlappingByClosest);
 
@@ -99,7 +100,7 @@ namespace MooTheCow
             lock (_cursorLock)
             {
                 _drawnDrawables.Remove(eraseThis);
-                var drawablesToDraw = getOverlappingDrawables(eraseThis);
+                var drawablesToDraw = GetOverlappingDrawables(eraseThis.Boundary);
                 drawablesToDraw.Sort(CompareOverlappingByClosest);
 
                 var drawing = CreateDrawingWithOverlap(eraseThis.Boundary, drawablesToDraw);
@@ -113,17 +114,12 @@ namespace MooTheCow
                 }
             }
         }
-        private static List<IDrawable> getOverlappingDrawables(IDrawable drawableToCheck, Point newLocation = new Point())
+        private static List<IDrawable> GetOverlappingDrawables(Rectangle boundary)
         {
-            var bound = drawableToCheck.Boundary;
-            if (!newLocation.IsEmpty)
-            {
-                bound.Location = newLocation;
-            }
             var overlappingDrawables = new List<IDrawable>();
-            foreach(Drawable drawn in _drawnDrawables)
+            foreach (Drawable drawn in _drawnDrawables)
             {
-                if (!ReferenceEquals(drawn, drawableToCheck) && drawn.Boundary.IntersectsWith(bound))
+                if (drawn.Boundary.IntersectsWith(boundary))
                 {
                     overlappingDrawables.Add(drawn);
                 }
@@ -179,7 +175,11 @@ namespace MooTheCow
             {
                 var y = destination.Y + drawThis.Boundary.Height;
 
-                var overlappingDrawables = getOverlappingDrawables(drawThis, destination);
+                var dest = drawThis.Boundary;
+                dest.Location = destination;
+
+                var overlappingDrawables = GetOverlappingDrawables(dest);
+                overlappingDrawables.Remove(drawThis);
 
                 foreach (IDrawable overlappingDrawable in overlappingDrawables)
                 {
@@ -192,24 +192,6 @@ namespace MooTheCow
                 return false;
             }
         }
-        public static bool ValidateMove(ConsoleKey keyPressed, IDrawable drawable)
-        {
-            Point validatePoint = drawable.Boundary.Location;
-
-            validatePoint.Offset(Program.KeyToPoint[keyPressed]);
-            if (
-                (validatePoint.X >= Console.WindowWidth - drawable.Boundary.Width + 1) ||
-                (validatePoint.X < 0) ||
-                (validatePoint.Y <= SceneManager.Horizon - drawable.Boundary.Height) ||
-                (validatePoint.Y >= Console.WindowHeight - 6) ||
-                Display.DrawableCollision(drawable, validatePoint)
-                )
-            {
-                return false;
-            }
-            return true;
-        }
-
         public static void DrawSceneTile(Point location)
         {
             lock (_cursorLock)

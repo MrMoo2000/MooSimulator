@@ -38,6 +38,43 @@
 				<frame>cow_death</frame>
 			</Death>
 		</cow>
+		<blackCow>
+			<FaceRight delay="0">
+				<frame>blackCow_face_right</frame>
+			</FaceRight>
+			<FaceLeft delay="100">
+				<frame>blackCow_face_left</frame>
+			</FaceLeft>
+			<WalkLeft delay="125">
+				<frame>blackCow_walk_left_1</frame>
+				<frame>blackCow_walk_left_2</frame>
+				<frame>blackCow_face_left</frame>
+			</WalkLeft>
+			<WalkRight delay="125">
+				<frame>blackCow_walk_right_1</frame>
+				<frame>blackCow_walk_right_2</frame>
+				<frame>blackCow_face_right</frame>
+			</WalkRight>
+			<HeadDownLeft delay="250">
+				<frame>blackCow_eat_left_1</frame>
+				<frame>blackCow_eat_left_2</frame>
+			</HeadDownLeft>
+			<HeadUpLeft delay="250">
+				<frame>blackCow_eat_left_1</frame>
+				<frame>blackCow_face_left</frame>
+			</HeadUpLeft>
+			<HeadDownRight delay="250">
+				<frame>blackCow_eat_right_1</frame>
+				<frame>blackCow_eat_right_2</frame>
+			</HeadDownRight>
+			<HeadUpRight delay="250">
+				<frame>blackCow_eat_right_1</frame>
+				<frame>blackCow_face_right</frame>
+			</HeadUpRight>
+			<Death delay ="0">
+				<frame>blackCow_death</frame>
+			</Death>
+		</blackCow>
 		<pig>
 			<FaceLeft delay="0">
 				<frame>pig_face_left</frame>

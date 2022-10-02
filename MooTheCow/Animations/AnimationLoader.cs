@@ -23,8 +23,8 @@ namespace MooTheCow
         public static Dictionary<string, AnimalAnimationBlueprints> Animations = new Dictionary<string, AnimalAnimationBlueprints>();
         public static Dictionary<string, Dictionary<AnimationTypes, IAnimation>> AnimalAnimations = new Dictionary<string, Dictionary<AnimationTypes, IAnimation>>();
 
-        static char colorEscapeBegin = '['; //TODO Change escape to config values 
-        static char colorEscapeEnd = ']';
+        private static char _colorEscapeBegin = '['; 
+        private static char _colorEscapeEnd = ']';
 
         static AnimationLoader()
         {
@@ -46,7 +46,9 @@ namespace MooTheCow
         private static XmlDocument GetAnimationsDoc()
         {
             XmlDocument configDoc = new XmlDocument();
-            configDoc.Load($"{Environment.CurrentDirectory}\\Animations\\AnimationsConfig.xml");
+            var AssemblyPath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+
+            configDoc.Load($"{AssemblyPath}\\Animations\\AnimationsConfig.xml");
             return configDoc;
         }
         // Get the node where animal animations are stored
@@ -118,7 +120,8 @@ namespace MooTheCow
             var frames = new List<IObjectTile[,]>();
             foreach (string fileName in animationBlueprint.FrameFileNames)
             {
-                var filePath = $"{Environment.CurrentDirectory}\\Animations\\Sprites\\{fileName}.txt";
+                var AssemblyPath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+                var filePath = $"{AssemblyPath}\\Animations\\Sprites\\{fileName}.txt";
                 string[] readText = File.ReadAllLines(filePath);
                 var stringToObjectTile = new StringToObjectTile(GetMaxWidth(readText), readText.Length);
                 foreach (string line in readText)
@@ -140,9 +143,9 @@ namespace MooTheCow
                 var charLineCount = 0;
                 for (int i = 0; i < s.Length; i++)
                 {
-                    if (s[i] == colorEscapeBegin)
+                    if (s[i] == _colorEscapeBegin)
                     {
-                        i = s.IndexOf(colorEscapeEnd, i);
+                        i = s.IndexOf(_colorEscapeEnd, i);
                     }
                     else
                     {

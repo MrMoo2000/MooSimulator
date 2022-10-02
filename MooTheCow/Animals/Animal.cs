@@ -44,6 +44,14 @@ namespace MooTheCow
             Drawable.Boundary = bound;
         }
 
+        public Point GetMouthLocation()
+        {
+            var facingOffset = (this.FacingLeft) ? new Point(0, 5) : new Point(11, 5);
+            var mouthLocation = Drawable.Boundary.Location;
+            mouthLocation.Offset(facingOffset);
+            return mouthLocation;
+        }
+
 
         public async void Eat()
         {
@@ -51,16 +59,12 @@ namespace MooTheCow
             AnimationTypes animation = (this.FacingLeft) ? AnimationTypes.HeadDownLeft : AnimationTypes.HeadDownRight;
 
             await Animator.Animation(animation, this);
-
-            var facingOffset = (this.FacingLeft) ? new Point(0, 5) : new Point(11, 5);
-
-            var mouthLocation = Drawable.Boundary.Location;
-            mouthLocation.Offset(facingOffset);
-
             int grassCount = 0;
             await Task.Delay(1000);
 
-            var tileTypes = SceneManager.GetTileTypes(mouthLocation, 4);
+            var tileTypes = SceneManager.GetTileTypes(GetMouthLocation(), 4);
+
+            var facingOffset = (this.FacingLeft) ? new Point(0, 5) : new Point(11, 5); // Duplicated in GetMouthLocation... 
 
             for (int i = 0; i< 4; i++)
             {
@@ -106,15 +110,14 @@ namespace MooTheCow
         public void MoveAnimal(ConsoleKey keyPressed)
         {
             EraseAnimal();
-            this.Drawable.AdjustLocation(Program.KeyToPoint[keyPressed]);
-            this.FacingLeft = (AnimalMovingLeft(Program.KeyToPoint[keyPressed]) == null) ? this.FacingLeft : (bool)AnimalMovingLeft(Program.KeyToPoint[keyPressed]);
+            this.Drawable.AdjustLocation(InputManager.KeyToPoint[keyPressed]);
+            this.FacingLeft = (AnimalMovingLeft(InputManager.KeyToPoint[keyPressed]) == null) ? this.FacingLeft : (bool)AnimalMovingLeft(InputManager.KeyToPoint[keyPressed]);
             DrawAnimal();
         }
 
         public void DecreaseStomachLevel(int amount = 1)
         {
             StomachLevel = (StomachLevel - amount) <= 0 ? 0 : StomachLevel - amount;
-            Debug.WriteLine(StomachLevel);
             if(StomachLevel == 0)
             {
                 Death();
@@ -126,6 +129,89 @@ namespace MooTheCow
             Alive = false;
             AnimationStop = true;
             Animator.DrawSingleFrame(AnimationTypes.Death, this);
+        }
+
+        public void Poop()
+        {
+            int poopXOffset = (FacingLeft) ? Drawable.Boundary.Width : -1;
+            int poopYOffset = Drawable.Boundary.Height - 1;
+            Point poopOffset = new Point(poopXOffset, poopYOffset);
+            Point createLocation = Drawable.Boundary.Location;
+            createLocation.Offset(poopOffset);
+            var poo = new Poo();
+            if(Validation.ValidateCreateItem(createLocation, poo))
+            {
+                var tile = SceneManager.Scene.Tiles[createLocation.X, createLocation.Y];
+                tile.Item = poo;
+                SceneManager.UpdateSceneTile(createLocation, tile);
+                poo.DecomposePoo(createLocation);
+            }
+        }
+
+        public async void Emote()
+        {
+            var emoteWord = "Moooo";
+            IObjectTile[,] objectTiles = new IObjectTile[emoteWord.Length+1, 1];
+            for (int i = 1; i < emoteWord.Length+1; i++)
+            {
+                objectTiles[i, 0] = new ObjectTile()
+                {
+                    ForegroundColor = ConsoleColor.Black,
+                    BackgroundColor = ConsoleColor.White,
+                    Image = emoteWord[i-1]
+                };
+            }            
+
+            var emoteXOffset = (FacingLeft) ? -1 * (emoteWord.Length + 2) : Drawable.Boundary.Width;
+            var emoteYOffset = Drawable.Boundary.Height - 4;
+            Point emoteOffset = new Point(emoteXOffset, emoteYOffset);
+            Point createLocation = Drawable.Boundary.Location;
+            createLocation.Offset(emoteOffset);
+
+            IDrawable emoteDrawable = new Drawable()
+            {
+                Boundary = new Rectangle(createLocation.X, createLocation.Y, objectTiles.GetLength(0), objectTiles.GetLength(1)),
+                ObjectTiles = objectTiles,
+                LayerOverride = 999
+            };
+            if (Validation.ValidateDrawableInWindow(emoteDrawable))
+            {
+                Display.Draw(emoteDrawable);
+                await Task.Delay(1000);
+                Display.Erase(emoteDrawable);
+
+            }
+        }
+
+        public bool CanEat()
+        {
+            var tileTypes = SceneManager.GetTileTypes(GetMouthLocation(), 4);
+            for (int i = 0; i < 4; i++)
+            {
+                if (tileTypes[i].Equals(typeof(GrassTile)))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public bool IsStarving()
+        {
+            if (StomachLevel <= StomachMax / 4)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public bool StomachIsFull()
+        {
+            if(StomachLevel == StomachMax)
+            {
+                return true;
+            }
+            return false;
         }
 
     }

@@ -8,20 +8,8 @@ using System.Diagnostics;
 
 namespace MooTheCow
 {
-
-
     class Program
     {
-        public static Dictionary<ConsoleKey, Point> KeyToPoint = new Dictionary<ConsoleKey, Point>
-        {
-            [ConsoleKey.UpArrow] = new Point(0, -1),
-            [ConsoleKey.DownArrow] = new Point(0, 1),
-            [ConsoleKey.LeftArrow] = new Point(-2, 0),
-            [ConsoleKey.RightArrow] = new Point(2, 0)
-        };
-
-        //public static List<Animal> OtherCows = new List<Animal>();
-
         static Program()
         {
             ConfigureConsole();
@@ -29,15 +17,20 @@ namespace MooTheCow
 
         static void Main(string[] args)
         {
+            if (!SkipSplash(args))
+            {
+                SplashScreen();
+            }
+            Console.Clear();
+            Console.SetWindowPosition(0, 0);
 
-            AnimalManager.AddNonPlayerAnimal("cow", new Point(15, 22),true);
-            AnimalManager.AddNonPlayerAnimal("cow", new Point(82, 20),true);
-            AnimalManager.AddNonPlayerAnimal("cow", new Point(8, 15));
-            AnimalManager.AddPlayerAnimal("cow", new Point(45, 22));
-
-            InputLoop();
-
+            AnimalManager.AddNonPlayerAnimal("cow", true);
+            AnimalManager.AddNonPlayerAnimal("cow", true);
+            AnimalManager.AddNonPlayerAnimal("cow");
+            AnimalManager.AddPlayerAnimal("blackCow");
+            InputManager.InputLoop();
         }
+
         public static void Exit()
         {
             Console.BackgroundColor = ConsoleColor.Black;
@@ -45,50 +38,66 @@ namespace MooTheCow
             Console.Clear();
             Environment.Exit(0);
         }
-        public static void InputLoop()
-        {
-            do
-            {
-                ProcessInput(Console.ReadKey(true).Key);
-            } while (0 == 0);
-        }
-        public static void ProcessInput(ConsoleKey keyPressed)
-        {
-            var playerAnimal = AnimalManager.Player;
-            if (playerAnimal.Busy == true)
-            {
-                return;
-            }
-            if (((int)keyPressed) >= 37 && (int)keyPressed <= 40 && Display.ValidateMove(keyPressed,AnimalManager.Player.Drawable))
-            {
-                playerAnimal.MoveAnimal(keyPressed);
-            }
-            if (keyPressed == ConsoleKey.Spacebar)
-            {
-                //theCow.drawMoo();
-                //Thread.Sleep(500);
-            }
-            if (keyPressed == ConsoleKey.P)
-            {
-                //theCow.drawPoo();
-            }
-            if (keyPressed == ConsoleKey.E)
-            {
-                playerAnimal.Eat();
-            }
-            if (keyPressed == ConsoleKey.X)
-            {
-                Exit();
-            }
-        }
 
         private static void ConfigureConsole()
         {
-            // TODO set a minimum window size
-            Console.Clear();
+            if (Console.WindowHeight < 30 && Console.WindowHeight < 120)
+            {
+                Console.SetWindowSize(120, 30);
+            }
+            else if(Console.WindowHeight < 30)
+            {
+                Console.SetWindowSize(Console.WindowWidth, 30);
+            }
+            else if (Console.WindowWidth < 120)
+            {
+                Console.SetWindowSize(120, Console.WindowHeight);
+            }
             Console.CursorVisible = false;
             Console.OutputEncoding = System.Text.Encoding.UTF8;
-            Console.SetWindowPosition(0, 0);
+        }
+
+        private static bool SkipSplash(string[] args)
+        {
+            if (args.Length > 0)
+            {
+                for (int i = 0; i < args.Length; i++)
+                {
+                    if (args[i].Equals("nosplash"))
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        private static void SplashScreen()
+        {
+            var rnd = new Random();
+
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.Green;
+
+            int writeDelay = 100;
+
+            for(int i = 0; i < 100; i++)
+            {
+                var locX = rnd.Next(0, Console.WindowWidth - 3);
+                var locY = rnd.Next(0, Console.WindowHeight - 3);
+                Console.SetCursorPosition(locX, locY);
+                Console.Write("MOO");
+                if(writeDelay >= 30 && i > 30)
+                {
+                    writeDelay -= 10;
+                }
+                if(i < 30)
+                {
+                    writeDelay = 10;
+                }
+                Thread.Sleep(writeDelay);
+
+            }
         }
     }
 }

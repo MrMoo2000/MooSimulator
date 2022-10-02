@@ -29,17 +29,6 @@ namespace MooTheCow
                     }
                     else if(y >= SceneManager.Horizon)
                     {
-
-                        //var grassTile = new GrassTile();
-                        /*if (rnd.Next(1, 10) < 2)
-                        {
-                            grassTile.tem = new ThickGrass();
-                        }
-                        if (rnd.Next(1, 20) < 2)
-                        {
-                            grassTile.item = new Flower();
-                        }
-                        */
                         Tiles[x, y] = new GrassTile();
                     }
                     else
@@ -99,7 +88,6 @@ namespace MooTheCow
                             drawTwo = false;
                         }
                     }
-                    //Tiles[cloudX + 92 - cloudY * 5, cloudY] = new CloudTile();
                 }
             }
             

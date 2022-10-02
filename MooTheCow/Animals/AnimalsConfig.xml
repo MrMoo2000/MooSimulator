@@ -2,10 +2,16 @@
 <animals>
 	<cow>
 		<name>cow</name>
-		<stomachMax>20</stomachMax>
+		<stomachMax>30</stomachMax>
 		<width>15</width>
 		<height>5</height>
 	</cow>
+	<blackCow>
+		<name>blackCow</name>
+		<stomachMax>30</stomachMax>
+		<width>15</width>
+		<height>5</height>
+	</blackCow>
 	<pig>
 		<name>pig</name>
 		<stomachMax>20</stomachMax>

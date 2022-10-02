@@ -10,18 +10,17 @@ namespace MooTheCow
     {
         private Dictionary<string, Dictionary<string,string>> _animalProperties = new Dictionary<string, Dictionary<string, string>>();
 
-        // Goal is to make something where we can pass in a string, and it will know what to create...
-
         public AnimalFactory()
         {
             XmlDocument animalDoc = new XmlDocument();
-            animalDoc.Load($"{Environment.CurrentDirectory}\\Animals\\AnimalsConfig.xml");
+            var AssemblyPath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+
+            animalDoc.Load($"{AssemblyPath}\\Animals\\AnimalsConfig.xml");
             foreach (XmlNode animal in animalDoc.SelectSingleNode ("//animals").ChildNodes)
             {
                 Dictionary<string, string> configAnimalProperties = new Dictionary<string, string>();
                 foreach (XmlNode animalProperty in animal)
                 {
-                    //Console.WriteLine($"{animalProperty.Name} + {animalProperty.InnerText}");
                     configAnimalProperties.Add(animalProperty.Name, animalProperty.InnerText);
                 }
                 if (configAnimalProperties.ContainsKey("name"))

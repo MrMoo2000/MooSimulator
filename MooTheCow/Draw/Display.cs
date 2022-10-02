@@ -34,19 +34,9 @@ namespace MooTheCow
             }
             Console.ForegroundColor = ConsoleColor.White;
             Console.SetCursorPosition(0, Console.WindowHeight - 2);
-            Console.Write("WELCOME TO MOO SIMULATOR 2000!");
+            Console.Write("WELCOME TO MOO SIMULATOR");
             Console.SetCursorPosition(5, Console.WindowHeight - 1);
             Console.Write("Press \u2195\u2194 to move | SPACEBAR to Moo | E to eat grass | P to poop | X to exit");
-
-            UpdateStomachUI(0);
-        }
-
-        public static void UpdateStomachUI(int stomachLevel)
-        {
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.BackgroundColor = ConsoleColor.Black;
-            Console.SetCursorPosition(Console.WindowWidth - 16, Console.WindowHeight - 1);
-            Console.Write($"Stomach: {stomachLevel * 5}%  ");
         }
 
         public static void Draw(IDrawable drawThis)
@@ -130,14 +120,12 @@ namespace MooTheCow
         {
             drawableOne ??= new Drawable { Boundary = new Rectangle(0, 0, 0, 0) };
             drawableTwo ??= new Drawable { Boundary = new Rectangle(0, 0, 0, 0) };
-            var drawableOneMaxY = drawableOne.Boundary.Y + drawableOne.Boundary.Height;
-            var drawableTwoMaxY = drawableTwo.Boundary.Y + drawableTwo.Boundary.Height;
 
-            if(drawableOneMaxY > drawableTwoMaxY)
+            if(drawableOne.GetLayer() > drawableTwo.GetLayer())
             {
                 return -1;
             }
-            else if(drawableOneMaxY < drawableTwoMaxY)
+            else if(drawableOne.GetLayer() < drawableTwo.GetLayer())
             {
                 return 1;
             }

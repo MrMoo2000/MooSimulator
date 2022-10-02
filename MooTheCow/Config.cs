@@ -10,8 +10,9 @@ namespace MooTheCow
         public static int HorizonOffset { get; private set; }
         static Config()
         {
+            var AssemblyPath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
             XmlDocument configDoc = new XmlDocument();
-            configDoc.Load($"{Environment.CurrentDirectory}\\Config.xml");
+            configDoc.Load($"{AssemblyPath}\\Config.xml");
             HorizonOffset = int.Parse(configDoc.SelectSingleNode("//horizonOffset").InnerText);
         }
     }

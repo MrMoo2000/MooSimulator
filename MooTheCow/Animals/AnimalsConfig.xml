@@ -15,7 +15,7 @@
 	<pig>
 		<name>pig</name>
 		<stomachMax>20</stomachMax>
-		<width>12</width>
+		<width>13</width>
 		<height>3</height>
 	</pig>
 </animals>

@@ -26,7 +26,8 @@ namespace MooTheCow
 
             AnimalManager.AddNonPlayerAnimal("cow", true);
             AnimalManager.AddNonPlayerAnimal("cow", true);
-            AnimalManager.AddNonPlayerAnimal("cow");
+            AnimalManager.AddNonPlayerAnimal("pig");
+            AnimalManager.AddNonPlayerAnimal("pig");
             AnimalManager.AddPlayerAnimal("blackCow");
             InputManager.InputLoop();
         }

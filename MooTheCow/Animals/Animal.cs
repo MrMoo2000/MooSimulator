@@ -46,7 +46,7 @@ namespace MooTheCow
 
         public Point GetMouthLocation()
         {
-            var facingOffset = (this.FacingLeft) ? new Point(0, 5) : new Point(11, 5);
+            var facingOffset = (this.FacingLeft) ? new Point(0, Drawable.Boundary.Height) : new Point(Drawable.Boundary.Width - 4, Drawable.Boundary.Height);
             var mouthLocation = Drawable.Boundary.Location;
             mouthLocation.Offset(facingOffset);
             return mouthLocation;
@@ -64,7 +64,7 @@ namespace MooTheCow
 
             var tileTypes = SceneManager.GetTileTypes(GetMouthLocation(), 4);
 
-            var facingOffset = (this.FacingLeft) ? new Point(0, 5) : new Point(11, 5); // Duplicated in GetMouthLocation... 
+            var facingOffset = (this.FacingLeft) ? new Point(0, Drawable.Boundary.Height) : new Point(Drawable.Boundary.Width-4, Drawable.Boundary.Height); // Duplicated in GetMouthLocation... 
 
             for (int i = 0; i< 4; i++)
             {

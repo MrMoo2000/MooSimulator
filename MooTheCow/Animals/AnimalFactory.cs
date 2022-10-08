@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Xml;
+using System.Linq;
 using System.Drawing;
 
 namespace MooTheCow
@@ -12,22 +13,24 @@ namespace MooTheCow
 
         public AnimalFactory()
         {
-            XmlDocument animalDoc = new XmlDocument();
             var AssemblyPath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
 
+            XmlDocument animalDoc = new XmlDocument();
+
             animalDoc.Load($"{AssemblyPath}\\Animals\\AnimalsConfig.xml");
+            
             foreach (XmlNode animal in animalDoc.SelectSingleNode ("//animals").ChildNodes)
             {
-                Dictionary<string, string> configAnimalProperties = new Dictionary<string, string>();
-                foreach (XmlNode animalProperty in animal)
-                {
-                    configAnimalProperties.Add(animalProperty.Name, animalProperty.InnerText);
-                }
+                var configAnimalProperties = animal
+                    .Cast<XmlNode>()
+                    .ToDictionary(animalProperty => animalProperty.Name, animalProperty => animalProperty.InnerText);
                 if (configAnimalProperties.ContainsKey("name"))
                 {
                     _animalProperties.Add(configAnimalProperties["name"], configAnimalProperties);
                 }
             }
+            
+
         }
         public Animal GetAnimal(string type)
         {

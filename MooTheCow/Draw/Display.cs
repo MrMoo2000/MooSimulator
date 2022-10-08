@@ -106,15 +106,7 @@ namespace MooTheCow
         }
         private static List<IDrawable> GetOverlappingDrawables(Rectangle boundary)
         {
-            var overlappingDrawables = new List<IDrawable>();
-            foreach (Drawable drawn in _drawnDrawables)
-            {
-                if (drawn.Boundary.IntersectsWith(boundary))
-                {
-                    overlappingDrawables.Add(drawn);
-                }
-            }
-            return overlappingDrawables;
+            return _drawnDrawables.Where(drawn => drawn.Boundary.IntersectsWith(boundary)).ToList();
         }
         private static int CompareOverlappingByClosest(IDrawable drawableOne, IDrawable drawableTwo)
         {
@@ -169,15 +161,9 @@ namespace MooTheCow
                 var overlappingDrawables = GetOverlappingDrawables(dest);
                 overlappingDrawables.Remove(drawThis);
 
-                foreach (IDrawable overlappingDrawable in overlappingDrawables)
-                {
-                    var olapY = overlappingDrawable.Boundary.Y + overlappingDrawable.Boundary.Height;
-                    if (olapY == y)
-                    {
-                        return true;
-                    }
-                }
-                return false;
+                return overlappingDrawables
+                    .Select(overlappingDrawable => overlappingDrawable.Boundary.Y + overlappingDrawable.Boundary.Height)
+                    .Any(olapY => olapY == y);
             }
         }
         public static void DrawSceneTile(Point location)

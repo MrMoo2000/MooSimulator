@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 using System.Drawing;
 using System.Threading.Tasks;
 using System.Diagnostics;
@@ -89,23 +90,13 @@ namespace MooTheCow
             {
                 allAnimals.Add(Player);
             }
-            bool placementFound;
+            bool placementConflict = true;
             var point = new Point();
             do
             {
-
-
-                placementFound = true;
                 point = new Point(GetRandomXAnimalPlacement(), GetRandomYAnimalPlacement());
-
-                foreach (Animal placedAnimal in allAnimals)
-                {
-                    if (placedAnimal.Drawable.Boundary.Contains(point))
-                    {
-                        placementFound = false;
-                    }
-                }
-            } while (placementFound == false);
+                placementConflict = allAnimals.Any(animal => animal.Drawable.Contains(point));
+            } while (placementConflict == true);
             return point;
         }
         private static int GetRandomXAnimalPlacement()

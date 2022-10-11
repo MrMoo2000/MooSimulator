@@ -93,6 +93,8 @@ namespace MooTheCow
             var point = new Point();
             do
             {
+
+
                 placementFound = true;
                 point = new Point(GetRandomXAnimalPlacement(), GetRandomYAnimalPlacement());
 

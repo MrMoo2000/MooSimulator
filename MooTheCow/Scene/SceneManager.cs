@@ -29,11 +29,6 @@ namespace MooTheCow
             }
             return types;
         }
-        public static void RedrawTile(Point location)
-        {
-
-        }
-
         /// <summary>
         /// Set x,y point of scene to specific tile 
         /// </summary>

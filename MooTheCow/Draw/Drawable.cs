@@ -8,6 +8,8 @@ namespace MooTheCow
         public Rectangle Boundary { get; set; }
         public IObjectTile[,] ObjectTiles { get; set; }
         public int? LayerOverride { get; set; }
+        public bool Contains(Point pt) { return Boundary.Contains(pt); }
+
         public int GetLayer()
         {
             if(LayerOverride != null)
@@ -24,5 +26,6 @@ namespace MooTheCow
             bound.Location = loc;
             Boundary = bound;
         }
+        
     }
 }

@@ -73,7 +73,7 @@ namespace MooTheCow
                         var pointToCheck = new Point(boundary.X + x, boundary.Y + y);
                         var tileToCheck = drawable.Boundary.Location;
                         tileToCheck = pointToCheck - (Size)tileToCheck;
-                        if (drawable.Boundary.Contains(pointToCheck) && drawable.ObjectTiles[tileToCheck.X, tileToCheck.Y] != null)
+                        if (drawable.Contains(pointToCheck) && drawable.ObjectTiles[tileToCheck.X, tileToCheck.Y] != null)
                         {
                             objectTile = drawable.ObjectTiles[tileToCheck.X, tileToCheck.Y];
                             break;

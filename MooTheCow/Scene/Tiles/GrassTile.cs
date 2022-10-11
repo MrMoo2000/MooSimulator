@@ -7,28 +7,27 @@ namespace MooTheCow
         public IItem Item { get; set; }
         public ConsoleColor Color { get; } = ConsoleColor.Green;
 
+        private readonly int _flowerChance = 5;
+        private readonly int _thickGrassChance = 15;
+        private Func<int> _itemChance = () => new Random().Next(1, 100);
+
         public ConsoleColor GetColor()
         {
             return ConsoleColor.Green;
         }
         public GrassTile()
         {
-            var itemChance = new Random().Next(1, 20);
+            Item = ChooseDecoration();
+        }
 
-            if (itemChance < 2)
-            {
-                // Flower
-                Item = new Flower();
-            }
-            else if (itemChance < 4)
-            {
-                // Thick Grass 
-                Item = new ThickGrass();
-            }
-            else
-            {
-                Item = null;
-            }
+        private IItem ChooseDecoration()
+        {
+            IItem item = null;
+
+            if (_itemChance() <= _flowerChance) { item = new Flower(); }
+            else if (_itemChance() <= _thickGrassChance) { item = new ThickGrass(); }
+
+            return item;
         }
     }
 }

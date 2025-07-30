@@ -28,10 +28,10 @@ namespace MooTheCow
 
         static AnimationLoader()
         {
-            LoadAnimiations();
+            LoadAnimations();
         }
 
-        private static void LoadAnimiations()
+        private static void LoadAnimations()
         {
             var animationsDoc = GetAnimationsDoc();
             var animals = GetAnimalAnimationNode(animationsDoc);
